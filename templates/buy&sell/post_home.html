@@ -1,0 +1,79 @@
+
+{% include 'base.html' %}
+
+{% load static %}
+
+
+{% block title %}Store Post Home{% endblock %}
+
+{% block body %}
+<body style="background: linear-gradient(to top, #040308, #AD4A28, #DD723C, #FC7001, #DCB697, #9BA5AE, #3E5879, #020B1A); min-height: 100vh; padding-top: 20px;">
+
+  {% include 'nav.html' %}
+
+  <!-- Search Bar -->
+  <form method="GET" action="{% url 'post-home' %}" class="container">
+    <div class="input-group mb-4 shadow-sm" style="max-width: 700px; margin: auto;">
+      <input type="text" name="q" class="form-control rounded-start" placeholder="Search for product or city (e.g., Toronto)" />
+      <button class="btn btn-danger rounded-end" type="submit">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </form>
+
+  <!-- Posts Grid -->
+  <div class="container">
+    <div class="row g-4">
+      {% for posts in queryset %}
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div class="card h-100 shadow-sm border-0">
+            <a href="{% url 'post-detail' posts.id %}">
+              <img src="{{ posts.photo.url }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Post Image" />
+            </a>
+            <div class="card-body">
+              <a href="{% url 'post-detail' posts.id %}" class="text-decoration-none text-dark">
+                <h6 class="card-title text-info">{{ posts.title|truncatewords:8 }}</h6>
+                <h6 class="text-success"><i class="fas fa-tags"></i> {{ posts.price|truncatewords:10 }}</h6>
+                <p class="mb-1 text-muted"><i class="fas fa-map-marker-alt"></i> {{ posts.location|truncatewords:4 }}</p>
+                <small class="text-muted">{{ posts.date_posted|date:"F d, Y" }}</small>
+              </a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col text-center">
+          <p class="text-light">No posts found.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-center mt-4">
+    {% include 'cashtreats/blog_post_pagination.html' with queryset=queryset %}
+  </div>
+
+  <!-- Jumbotron Section -->
+  <div class="container mt-5">
+    <div class="p-5 rounded bg-light shadow">
+      <h2 class="text-center mb-4"><i class="fas fa-tags"></i> Buy & Sell Online</h2>
+      <hr />
+      <p class="lead text-center">
+        Sell your stuff online for extra money with a wide range of categories — cars, housing, jobs, and more.
+      </p>
+      <p class="text-center">
+        List your tangible or digital goods for free. It’s an eco-friendly and local way to recycle, connect, and buy or sell items face-to-face.
+      </p>
+      <div class="text-center mt-4">
+        <a class="btn btn-primary btn-lg" href="{% url 'post-home' %}">
+          Buy & Sell Anything <i class="icon ion-android-arrow-forward"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {% include 'cashtreats/footer-sort.html' %}
+</body>
+{% endblock %}
+
+{% include 'cashtreats/footer-sort.html' %}

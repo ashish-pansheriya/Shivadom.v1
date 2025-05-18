@@ -1,0 +1,53 @@
+<h1>Kundali for {{ name }}</h1>
+<p>Date & Time: {{ datetime }}</p>
+<p>Latitude: {{ latitude }}</p>
+<p>Longitude: {{ longitude }}</p>
+<p>Timezone: {{ timezone }}</p>
+
+<h2>South Indian Style Chart</h2>
+<style>
+  .chart {
+    width: 400px;
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 2px solid #333;
+    margin: auto;
+    font-size: 14px;
+    text-align: center;
+    background: #fffbf0;
+    font-weight: bold;
+  }
+  .box {
+    border: 1px solid #999;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .empty {
+    background: #fff;
+    border: none;
+  }
+</style>
+
+<div class="chart">
+  <div class="box">4<br>{{ houses.4 }}</div>
+  <div class="box">5<br>{{ houses.5 }}</div>
+  <div class="box">6<br>{{ houses.6 }}</div>
+  <div class="box">3<br>{{ houses.3 }}</div>
+  <div class="box empty"></div>
+  <div class="box">7<br>{{ houses.7 }}</div>
+  <div class="box">2<br>{{ houses.2 }}</div>
+  <div class="box">1<br>{{ houses.1 }}</div>
+  <div class="box">8<br>{{ houses.8 }}</div>
+</div>
+
+<h2>Planetary Positions:</h2>
+<ul>
+  {% for planet, degree in planets.items %}
+    <li>{{ planet }}: {{ degree|floatformat:2 }}°</li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,61 @@
+{% include 'base.html' %}
+{% include 'nav.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+<title>{% block title %} H O M E {% endblock %}</title>
+
+{% block body %}
+<body style="background:linear-gradient(-120deg, #021B79, #0575E6, #205E9B); margin: 0; padding: 0; min-height: 100vh;">
+
+<div style="background-color: #FA8BFF;
+background-image: linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
+width: 100%;
+padding: 20px 0;">
+<div class="content-section" style="max-width: 600px; margin: 0 auto; padding: 0 15px;">
+
+    <form method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Join Today</legend>
+            {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Sign Up</button>
+        </div>
+    </form>
+    <div class="border-top pt-3">
+        <small class="text-muted">Already Have An Account?<a class="ml-4" href="{% url 'login' %}">Sign In</a></small>
+    </div>
+</div>
+</div>
+
+<style>
+/* Remove default body margins */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Full width background div */
+body > div {
+    width: 100%;
+}
+
+/* Center content while keeping full width background */
+.content-section {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .content-section {
+        padding: 20px 15px;
+    }
+}
+</style>
+
+</body>
+{% endblock %}

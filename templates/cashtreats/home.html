@@ -1,0 +1,76 @@
+{% include 'base.html' %}
+{% include 'nav.html' %}
+{% load static %}
+{% block body %}
+
+<head>
+  <title>{% block title %} Shivadom {% endblock %}</title>
+</head>
+<body >
+
+<div>
+   <!-- Carousel Section -->
+<section id="carousel">
+    <div id="carouselExample" class="carousel slide carousel-fade" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="jumbotron carousel-hero" style="background-image: url('{% static 'assets/img/crowd-dances.png' %}');">
+            <h3 class="hero-title">Place your mind-generated fire to the temple's diya or incense stick</h3>
+            <p class="hero-subtitle">Shivadom | Place Your Triggered Light</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="jumbotron carousel-hero" style="background-image: url('{% static 'assets/img/xbox.png' %}');">
+            <h3 class="hero-title">अपने मन में उत्पन्न अग्नि को मंदिर के दीपक या अगरबत्ती में प्रज्वलित करें</h3>
+            <p class="hero-subtitle">शिवाडोम | मन की अग्नि का सही मार्ग।</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="jumbotron carousel-hero" style="background-image: url('{% static 'assets/img/party.png' %}');">
+            <h3 class="hero-title">તમારા મનમાં ઉદ્ભવેલ અગ્નિને મંદિરના દીવા કે અગરબત્તીમાં પ્રજ્વલિત કરો</h3>
+            <p class="hero-subtitle">શિવડોમ | તમારી જગેલી જ્યોતને યોગ્ય સ્થાન</p>
+          </div>
+        </div>
+      </div>
+      <!-- Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+  
+      <!-- Indicators -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="English"></button>
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Hindi"></button>
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Gujarati"></button>
+      </div>
+    </div>
+  </section>
+  
+
+
+
+ <div class="example-box">
+        <div class="background-shapes"></div>
+         <p class="lead text-center">
+         <a class="nav-link" href="{% url 'friend-home' %}" title="Look for events near by you"><i class="fas fa-user-astronaut"></i><strong>  Cosmic Connections&nbsp;</strong><i class="fas fa-street-view"></i><br></a></li>
+         <a class="nav-link" href="{% url 'event-home' %}" title="Look for events near by you"><i class="fab fa-fort-awesome"></i><strong>  Dharma Meetups&nbsp;</strong><i class="fab fa-fort-awesome"></i><br></a></li>
+         <a class="nav-link" href="{% url 'post-home' %}" title="Look for events near by you"><i class="fas fa-tags"></i><strong>  Karma Bazaar&nbsp;</strong><i class="fas fa-tags"></i><br></a></li>
+         <a class="nav-link" href="{% url 'recruiter-home' %}" title="Look for events near by you"><i class="fas fa-id-badge"></i><strong>  Soulful Services&nbsp;</strong><i class="fas fa-id-badge"></i><br></a></li>
+    </div>
+    
+    <div>{% include 'blogs/blog_home.html' %}</div>
+
+
+
+
+
+{% include 'cashtreats/footer.html' %}
+{% endblock %}
+</body>
+
+</html>

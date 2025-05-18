@@ -1,0 +1,89 @@
+
+
+
+
+
+
+
+{% block body %}
+
+<div style="background:linear-gradient(to top, #040308, #AD4A28, #DD723C, #FC7001, #DCB697, #9BA5AE, #3E5879, #020B1A);">
+<br>
+
+    <div class="d-flex justify-content-center">
+        <h5 class="text-primary">Read <h5>
+
+        <!--a class="btn btn-outline-primary stn-sm " href="{% url 'blog-create' %}" style=" padding: 1px 20px; border-radius: 3px 3px 3px 3px;" role="button">Write<i class="fas fa-pencil-alt"></i></a-->
+    </div>
+    <form method="GET" action="{% url 'home' %}" onsubmit="return false;">
+        <div class="input-group" style="width: 70%; margin: 10px auto;">
+          <input type="text" id="searchInput" class="form-control" placeholder="Search Blog Example: Story ..">
+          <div class="input-group-append">
+            <button class="btn btn-danger" type="button">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+      <div id="results">
+        {% include 'cashtreats/blog_list_partial.html' with queryset=queryset %}
+      </div>
+      
+
+<div class="row mx-auto" style="margin-top: 22px;" >
+
+    {% for posts in page_obj  %}
+
+
+    <div class="col-md-4 mx-auto">
+        <div class="mx-auto" >
+            <div class="mx-auto" >
+                 <div class="card bg-light mb-5 mx-auto " >
+                     <div class="row no-gutters">
+                        <div class="col-md-12" >
+                             <a href="{% url 'blog-detail' posts.id %}"><img src="{{ posts.photo.url }}" class="card-img" style="width: 100%; height: 30ex; object-fit: cover;" alt="..."></a>
+                        </div>
+
+                            <div class="col-md-12">
+                                <a class="custom-card" style="color: #212529; text-decoration: none;" href="{% url 'blog-detail' posts.id %}">
+                                    <div class="card-body" style="width: 100%;height:300px; white-space:wrap; overflow: hidden; text-overflow:auto; ">
+                                        <h6 class="text-secondary"><i class="fas fa-bookmark"></i> {{posts.category|truncatewords:8}}</h6><br>
+                                        <h4>{{posts.title|truncatewords:10 | safe}}</h4></p>
+                                        {{posts.content|truncatewords:50 | safe}}</p>
+
+                                    </div>
+                                </a>
+                            </div>
+                     </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- if last column in row -->
+    {% if forloop.counter|divisibleby:"100" and not forloop.last %}
+</div><div class="row">
+    {% endif %}
+    {% endfor %}
+</div>
+<div class="d-flex justify-content-center">{% include 'cashtreats/blog_post_pagination.html' with queryset=queryset %}</div>
+
+</div>
+
+<script>
+    const input = document.getElementById("searchInput");
+  
+    input.addEventListener("keyup", function () {
+      const query = input.value;
+  
+      fetch(`/ajax-search/?q=${encodeURIComponent(query)}`)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById("results").innerHTML = data;
+        });
+    });
+  </script>
+  
+{% endblock %}
+

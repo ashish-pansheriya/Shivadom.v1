@@ -1,0 +1,216 @@
+{% include 'base.html' %}
+{% include 'nav.html' %}
+{% load static %}
+
+<head>
+  <title>{% block title %}Recruiter Details {% endblock %}</title>
+  <style>
+    .profile-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 15px 15px 0 0;
+    }
+    .profile-img-container {
+      padding: 15px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin: -50px auto 20px;
+      max-width: 250px;
+    }
+    .profile-img {
+      border-radius: 10px;
+      width: 100%;
+      height: auto;
+    }
+    .detail-card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .skill-badge {
+      display: inline-block;
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 5px 15px;
+      margin: 5px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+    .section-title {
+      color: #5e72e4;
+      border-left: 4px solid #5e72e4;
+      padding-left: 10px;
+      margin: 20px 0 15px;
+    }
+    .contact-btn {
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      border: none;
+      border-radius: 30px;
+      padding: 10px 25px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s;
+    }
+    .contact-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255,75,43,0.3);
+    }
+    .info-icon {
+      color: #5e72e4;
+      width: 25px;
+      text-align: center;
+      margin-right: 10px;
+    }
+    .timeline-badge {
+      background: #5e72e4;
+      color: white;
+      border-radius: 10px;
+      padding: 8px 15px;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+
+{% block body %}
+<body style="background: #f8f9fa; min-height: 100vh;">
+
+<div class="container py-5">
+  <div class="detail-card mx-auto">
+    <div class="profile-header text-white text-center py-4">
+      <h2 class="mb-0">{{ object.name }}</h2>
+      <p class="mb-0">{{ object.designation }}</p>
+    </div>
+
+    <div class="card-body px-4">
+      <div class="text-center">
+        <div class="profile-img-container">
+          <img src="{{ object.image.url }}" class="profile-img" alt="{{ object.name }}">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="bg-white p-4 rounded-lg mb-4">
+            <h4 class="section-title">Basic Information</h4>
+            <div class="d-flex align-items-center mb-3">
+              <i class="far fa-building info-icon"></i>
+              <div>
+                <h6 class="mb-0 text-muted">Company</h6>
+                <p class="mb-0 font-weight-bold">{{ object.company }}</p>
+              </div>
+            </div>
+            
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-map-marker-alt info-icon"></i>
+              <div>
+                <h6 class="mb-0 text-muted">Location</h6>
+                <p class="mb-0 font-weight-bold">{{ object.location }}</p>
+              </div>
+            </div>
+            
+            <div class="d-flex align-items-center">
+              <i class="fas fa-briefcase info-icon"></i>
+              <div>
+                <h6 class="mb-0 text-muted">Industry</h6>
+                <p class="mb-0 font-weight-bold">{{ object.industry }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="bg-white p-4 rounded-lg mb-4">
+            <h4 class="section-title">Position Details</h4>
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-user-tie info-icon"></i>
+              <div>
+                <h6 class="mb-0 text-muted">Job Title</h6>
+                <p class="mb-0 font-weight-bold">{{ object.job_title }}</p>
+              </div>
+            </div>
+            
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-chart-line info-icon"></i>
+              <div>
+                <h6 class="mb-0 text-muted">Experience Required</h6>
+                <p class="mb-0 font-weight-bold">{{ object.job_exp }} years</p>
+              </div>
+            </div>
+            
+            <div class="d-flex align-items-center">
+              <i class="fas fa-calendar-alt info-icon"></i>
+              <div>
+                <h6 class="mb-0 text-muted">Posted On</h6>
+                <p class="mb-0 font-weight-bold">{{object.date_posted|date:"F d, Y"}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white p-4 rounded-lg mb-4">
+        <h4 class="section-title">Skills I Hire For</h4>
+        <div class="mb-4">
+          {% for skill in object.skill.split %}
+            <span class="skill-badge">{{ skill }}</span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="bg-white p-4 rounded-lg mb-4">
+        <h4 class="section-title">Job Description</h4>
+        <p class="text-justify">{{ object.job_details }}</p>
+      </div>
+
+      <div class="bg-white p-4 rounded-lg mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <h4 class="section-title d-inline-block">Interview Timeline</h4>
+            <div class="timeline-badge">
+              <i class="far fa-calendar mr-2"></i>
+              {{ object.starts|date:"M d" }} - {{ object.ends|date:"M d, Y" }}
+            </div>
+          </div>
+          <button class="btn contact-btn" data-toggle="collapse" href="#collapseExample" role="button">
+            <i class="fas fa-paper-plane mr-2"></i> Contact Now
+          </button>
+        </div>
+        
+        <div class="collapse mt-3" id="collapseExample">
+          <div class="card card-body border-0 bg-light">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-phone fa-lg text-primary mr-3"></i>
+              <h4 class="mb-0">{{object.contact}}</h4>
+            </div>
+            <div class="d-flex align-items-center">
+              <i class="fas fa-envelope fa-lg text-primary mr-3"></i>
+              <h4 class="mb-0">{{object.email}}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% if object.author == user %}
+      <div class="bg-white p-4 rounded-lg">
+        <div class="d-flex justify-content-between align-items-center">
+          <small class="text-muted"><i class="far fa-calendar-check mr-2"></i>Created on {{object.date_posted|date:"F d, Y"}}</small>
+          <div>
+            <a class="btn btn-outline-secondary btn-sm" href="{% url 'recruiter-post-update' object.id %}">
+              <i class="fas fa-edit mr-1"></i> Update
+            </a>
+            <a class="btn btn-outline-danger btn-sm" href="{% url 'recruiter-post-delete' object.id %}">
+              <i class="fas fa-trash-alt mr-1"></i> Delete
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+</body>
+{% include 'cashtreats/footer-sort.html' %}
+{% endblock %}

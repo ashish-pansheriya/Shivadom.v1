@@ -1,0 +1,33 @@
+<div id="planet-bar" style="width: 100%; height: 300px; overflow-x: auto; background: black; color: white;"></div>
+
+<script>
+  async function loadPlanets() {
+    const res = await fetch("/api/planets/");
+    const data = await res.json();
+    const container = document.getElementById("planet-bar");
+    container.innerHTML = '';
+
+    data.planets.forEach(p => {
+      const box = document.createElement('div');
+      box.style.cssText = `
+        width: 200px;
+        height: 250px;
+        margin: 10px;
+        background: #222;
+        border: 1px solid #555;
+        border-radius: 10px;
+        padding: 10px;
+        display: inline-block;
+        color: white;
+      `;
+      box.innerHTML = `
+        <h2>${p.planet}</h2>
+        <p><strong>Sign:</strong> ${p.sign}</p>
+        <p><strong>Degrees:</strong> ${p.degrees_in_sign}°</p>
+      `;
+      container.appendChild(box);
+    });
+  }
+
+  loadPlanets();
+</script>

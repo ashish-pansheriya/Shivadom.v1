@@ -1,0 +1,105 @@
+{% include 'nav.html' %}
+{% include 'base.html' %}
+{% load static %}
+
+<head>
+  <title>{% block title %}Delete Post{% endblock %}</title>
+  <style>
+    .delete-gradient {
+      background: linear-gradient(135deg, #58151A 0%, #BC2909 20%, #BA6D09 40%, #71A8EE 60%, #3072EB 80%, #0542A8 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .delete-container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      padding: 2.5rem;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    .delete-header {
+      color: #d9534f;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+    .delete-message {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: #333;
+    }
+    .post-title {
+      color: #BC2909;
+      font-weight: 600;
+      word-break: break-word;
+    }
+    .btn-delete {
+      background: linear-gradient(45deg, #d9534f, #BC2909);
+      border: none;
+      padding: 8px 25px;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+    .btn-delete:hover {
+      background: linear-gradient(45deg, #BC2909, #d9534f);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(188, 41, 9, 0.3);
+    }
+    .btn-cancel {
+      background: linear-gradient(45deg, #5bc0de, #3072EB);
+      border: none;
+      padding: 8px 25px;
+      font-weight: 600;
+    }
+    .btn-cancel:hover {
+      background: linear-gradient(45deg, #3072EB, #5bc0de);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(48, 114, 235, 0.3);
+    }
+    .confirmation-icon {
+      font-size: 3rem;
+      color: #d9534f;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+
+{% block body %}
+<body class="delete-gradient">
+  <div class="delete-container">
+    <div class="confirmation-icon">
+      <i class="fas fa-exclamation-triangle"></i>
+    </div>
+    <h2 class="delete-header">Delete Confirmation</h2>
+    
+    <p class="delete-message">
+      Are you sure you want to permanently delete the post<br>
+      <span class="post-title">"{{ object.title }}"</span>?
+    </p>
+    <p class="text-muted mb-4">
+      This action cannot be undone.
+    </p>
+    
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <button class="btn btn-delete text-white" type="submit">
+          <i class="fas fa-trash-alt mr-2"></i> Yes, Delete
+        </button>
+        <a class="btn btn-cancel text-white" href="{% url 'post-detail' object.id %}">
+          <i class="fas fa-times-circle mr-2"></i> Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Font Awesome for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+{% endblock %}

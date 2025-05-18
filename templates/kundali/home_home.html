@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kundali Generator</title>
+    <style>
+        body { font-family: sans-serif; background: #0f1117; color: #eee; }
+        .chart-box { display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 20px; }
+        .card { background: #1f1f2e; border-radius: 10px; padding: 15px; margin: 10px; width: 460px; }
+        h2 { text-align: center; color: #ffcb6b; }
+        table { width: 100%; border-collapse: collapse; }
+        td, th { padding: 5px 10px; border: 1px solid #555; text-align: left; }
+        select, input { padding: 5px; margin: 5px; }
+        .form-box { text-align: center; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        <form method="POST">
+            {% csrf_token %}
+            <label>Date (DD.MM.YYYY):</label>
+            <input type="text" name="date" required placeholder="22.11.1988" value="{{ input_date }}">
+            <label>Time (HH:MM):</label>
+            <input type="text" name="time" required placeholder="22:45" value="{{ input_time }}">
+            <label>City:</label>
+            <select name="city" required>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Bengaluru">Bengaluru</option>
+            </select>
+            <button type="submit">Generate Kundali</button>
+        </form>
+    </div>
+
+    {% if planet_data %}
+    <div class="chart-box">
+        <div class="card">
+            <h2>D1 Kundali</h2>
+            <table>
+                <tr><th>Graha</th><th>Sign</th><th>House</th><th>Dignity</th></tr>
+                {% for p in planet_data %}
+                <tr>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.sign }}</td>
+                    <td>{{ p.house }}</td>
+                    <td>{{ p.dignity }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Current Gochar</h2>
+            <table>
+                <tr><th>Graha</th><th>Sign</th><th>House</th><th>Dignity</th></tr>
+                {% for p in gochar_data %}
+                <tr>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.sign }}</td>
+                    <td>{{ p.house }}</td>
+                    <td>{{ p.dignity }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</body>
+</html>

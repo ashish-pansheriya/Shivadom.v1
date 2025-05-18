@@ -1,0 +1,82 @@
+{% load static %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Planetary Positions</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0d0d1a;
+      color: #fff;
+      font-family: sans-serif;
+    }
+
+    #planet-bar {
+      width: 1900px;
+      height: 300px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      background: linear-gradient(to right, #111122, #222244);
+      overflow-x: auto;
+      border: 2px solid #444;
+    }
+
+    .planet-box {
+      width: 200px;
+      height: 260px;
+      background: #1e1e2e;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px #4444ff;
+      text-align: center;
+    }
+
+    .planet-box h2 {
+      margin: 5px 0;
+      color: #fdfd96;
+    }
+
+    .planet-box p {
+      margin: 3px 0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div id="planet-bar"></div>
+
+  <script>
+    async function loadPlanets() {
+      const res = await fetch("/api/planets/");
+      const data = await res.json();
+
+      const container = document.getElementById("planet-bar");
+      container.innerHTML = "";
+
+      data.planets.forEach(p => {
+        const box = document.createElement("div");
+        box.className = "planet-box";
+        box.innerHTML = `
+          <h2>${p.planet}</h2>
+          <p><strong>Sign:</strong> ${p.sign}</p>
+          <p><strong>Degree:</strong> ${p.degrees_in_sign}°</p>
+          <p><strong>Next Sign In:</strong> ${p.hrs_to_next_sign} hrs</p>
+        `;
+        container.appendChild(box);
+      });
+    }
+
+    loadPlanets();
+    setInterval(loadPlanets, 30000); // Refresh every 30 sec
+  </script>
+</body>
+</html>
+
+
+{% endblock %}

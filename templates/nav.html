@@ -1,0 +1,65 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm " style="background: linear-gradient(to right, #fab76a, #ff2c10); font-family: 'Lato', sans-serif;">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="{% url 'home' %}" style="font-size: 1.5rem;">
+        SHIVAD
+        <span style="transform: rotate(90deg); display: inline-block; color: #3c3c3c;">
+            <i class="fas fa-eye"></i>
+        </span>
+        M
+    </a>
+
+    
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/eye-icon.svg' %}">
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="peopleDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-star-half"></i> People
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="peopleDropdown">
+            <li><a class="dropdown-item" href="{% url 'friend-home' %}"><i class="fas fa-user-astronaut"></i> Find People</a></li>
+            <li><a class="dropdown-item" href="{% url 'recruiter-home' %}"><i class="fas fa-id-badge"></i> Get Hired</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'event-home' %}"><i class="fas fa-hands-helping"></i>  Community</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'post-home' %}"><i class="fas fa-store-alt"></i> Store</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="createDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-feather-alt"></i> Create
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="createDropdown">
+            <li><a class="dropdown-item" href="{% url 'friend-post-create' %}"><i class="fas fa-star-half"></i> My Profile</a></li>
+            <li><a class="dropdown-item" href="{% url 'post-create' %}"><i class="fas fa-tags"></i> Marketplace</a></li>
+            <li><a class="dropdown-item" href="{% url 'recruiter-post-create' %}"><i class="fas fa-id-badge"></i> Community Post</a></li>
+            <li><a class="dropdown-item" href="{% url 'event-post-create' %}"><i class="fas fa-moon"></i>Create Event</a></li>
+            <li><a class="dropdown-item" href="{% url 'blog-create' %}"><i class="fas fa-scroll"></i> Write a Blog</a></li>
+          </ul>
+        </li>
+
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}"><i class="fas fa-user-circle"></i> Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'logout-confirm' %}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </div>
+</nav>

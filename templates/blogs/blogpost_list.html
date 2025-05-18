@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% include 'nav.html' %}
+{% load static %}
+{% block content %}
+<h1>Blog Posts</h1>
+{% for post in posts %}
+    <article>
+        <h2><a href="{% url 'blog-detail' post.pk %}">{{ post.title }}</a></h2>
+        <p>By {{ post.author }} on {{ post.date_posted|date:"F d, Y" }}</p>
+        <p>{{ post.content|truncatechars:200 }}</p>
+    </article>
+    <hr>
+{% endfor %}
+{% endblock %}

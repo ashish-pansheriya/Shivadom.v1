@@ -1,0 +1,175 @@
+{% include 'base.html' %}
+{% include 'nav.html' %}
+{% load static %}
+
+<head>
+  <title>{% block title %}{{ object.title }} | Event Details {% endblock %}</title>
+  <style>
+    .event-gradient-bg {
+      background: linear-gradient(135deg, #122B40 0%, #446CB3 100%);
+      min-height: 100vh;
+    }
+    .event-card {
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      overflow: hidden;
+      max-width: 1200px;
+      margin-top: 30px;
+      background: linear-gradient(110.8deg, rgba(255,255,255,0.9) 11.4%, rgba(255,255,255,0.95) 84.5%);
+    }
+    .event-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .event-image-container:hover .event-image {
+      transform: scale(1.03);
+    }
+    .event-header {
+      background: rgba(0,0,0,0.03);
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    .info-label {
+      font-weight: 600;
+      color: #4a5568;
+      display: inline-block;
+      width: 120px;
+    }
+    .contact-btn {
+      background: linear-gradient(45deg, #FF416C, #FF4B2B);
+      border: none;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    .contact-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255,75,43,0.3);
+    }
+    .social-section {
+      border-top: 1px solid rgba(0,0,0,0.1);
+      padding-top: 20px;
+      margin-top: 20px;
+    }
+    .ticket-badge {
+      background: linear-gradient(45deg, #11998e, #38ef7d);
+      color: white;
+      font-size: 1.1rem;
+      padding: 8px 15px;
+      border-radius: 50px;
+    }
+  </style>
+</head>
+
+{% block body %}
+<body class="event-gradient-bg">
+  <div class="container">
+    <!-- Main Event Card -->
+    <div class="card event-card mx-auto">
+      <div class="row no-gutters">
+        <!-- Event Image Column -->
+        <div class="col-md-8 event-image-container">
+          <img src="{{ object.image.url }}" class="event-image" alt="{{ object.title }}">
+        </div>
+        
+        <!-- Event Info Column -->
+        <div class="col-md-4">
+          <div class="card-body h-100 d-flex flex-column">
+            <div class="event-header p-3">
+              <h2 class="card-title font-weight-bold">{{ object.title }}</h2>
+              <div class="ticket-badge my-3">
+                <i class="fas fa-ticket-alt mr-2"></i>{{ object.tickets }} available
+              </div>
+            </div>
+            
+            <div class="card-body text-dark flex-grow-1">
+              <div class="mb-4">
+                <h5 class="text-primary mb-3"><i class="fas fa-map-marker-alt mr-2"></i>Location</h5>
+                <p>{{ object.location }}</p>
+              </div>
+              
+              <div class="mb-4">
+                <h5 class="text-primary mb-3"><i class="far fa-calendar-alt mr-2"></i>Date & Time</h5>
+                <p>
+                  <strong>Starts:</strong> {{ object.starts }}<br>
+                  <strong>Ends:</strong> {{ object.ends }}
+                </p>
+              </div>
+              
+              <!-- Contact Button -->
+              <div class="mt-auto">
+                <button class="btn contact-btn btn-block" data-toggle="collapse" data-target="#contactInfo">
+                  <i class="fas fa-envelope mr-2"></i> Contact Organizer
+                </button>
+                
+                <!-- Contact Info (Collapsed) -->
+                <div class="collapse mt-3" id="contactInfo">
+                  <div class="card card-body border-0 shadow-sm">
+                    <div class="d-flex align-items-center mb-2">
+                      <i class="fas fa-phone mr-2 text-primary"></i>
+                      <h5 class="mb-0">{{ object.contact }}</h5>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <i class="fas fa-envelope mr-2 text-primary"></i>
+                      <h5 class="mb-0">{{ object.email }}</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Event Details Section -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card-body p-4">
+            <h3 class="card-title mb-4 text-primary">About This Event</h3>
+            <div class="card-text mb-4">
+              {{ object.description|safe }}
+            </div>
+            
+            <div class="row mb-4">
+              <div class="col-md-6">
+                <p><span class="info-label">Event Topic:</span> {{ object.topic }}</p>
+                <p><span class="info-label">Event Type:</span> {{ object.types }}</p>
+              </div>
+              <div class="col-md-6">
+                <p><span class="info-label">Organizer:</span> {{ object.organiser }}</p>
+                <p><span class="info-label">About Organizer:</span> {{ object.description2 }}</p>
+              </div>
+            </div>
+            
+            <!-- Social Sharing Section -->
+            <div class="social-section">
+              <div class="fb-like mb-3" data-href="http://127.0.0.1:8000/events{{object.id}}" data-width="" data-layout="button_count" data-action="like" data-size="large" data-share="true"></div>
+              <div class="fb-comments" data-href="http://127.0.0.1:8000/events{{object.id}}" data-numposts="5" data-width="100%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Edit/Delete Buttons (for owner) -->
+      {% if object.author == user %}
+      <div class="card-footer bg-light">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <a class="btn btn-outline-secondary mr-2" href="{% url 'event-post-update' object.id %}">
+              <i class="fas fa-edit mr-1"></i> Update
+            </a>
+            <a class="btn btn-outline-danger" href="{% url 'event-post-delete' object.id %}">
+              <i class="fas fa-trash-alt mr-1"></i> Delete
+            </a>
+          </div>
+          <small class="text-muted">
+            <i class="far fa-calendar-alt mr-1"></i> Created on {{ object.date_posted|date:"F d, Y" }}
+          </small>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</body>
+{% include 'cashtreats/footer-sort.html' %}
+{% endblock %}

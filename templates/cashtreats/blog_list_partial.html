@@ -1,0 +1,28 @@
+<!-- cashtreats/blog_list_partial.html -->
+<div class="row mx-auto" style="margin-top: 22px;">
+    {% for posts in queryset %}
+      <div class="col-md-4 mx-auto">
+        <div class="card bg-light mb-5 mx-auto">
+          <div class="row no-gutters">
+            <div class="col-md-12">
+              <a href="{% url 'blog-detail' posts.id %}">
+                <img src="{{ posts.photo.url }}" class="card-img" style="width: 100%; height: 30ex; object-fit: cover;" alt="...">
+              </a>
+            </div>
+            <div class="col-md-12">
+              <a class="custom-card" style="color: #212529; text-decoration: none;" href="{% url 'blog-detail' posts.id %}">
+                <div class="card-body" style="width: 100%; height:300px; white-space:wrap; overflow: hidden; text-overflow:auto;">
+                  <h6 class="text-secondary"><i class="fas fa-bookmark"></i> {{ posts.category|truncatewords:8 }}</h6><br>
+                  <h4>{{ posts.title|truncatewords:10 | safe }}</h4>
+                  {{ posts.content|truncatewords:50 | safe }}
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center text-muted">No blogs found.</p>
+    {% endfor %}
+  </div>
+  

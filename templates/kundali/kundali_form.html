@@ -1,0 +1,11 @@
+<form method="POST" action="{% url 'generate_kundali' %}">
+    {% csrf_token %}
+    <label>Name:</label><input type="text" name="name"><br>
+    <label>Date:</label><input type="date" name="date"><br>
+    <label>Time:</label><input type="time" name="time"><br>
+    <label>Latitude:</label><input type="text" name="latitude" value="19.0760"><br>
+    <label>Longitude:</label><input type="text" name="longitude" value="72.8777"><br>
+    <label>Timezone:</label><input type="text" name="timezone" value="5.5"><br>
+    <button type="submit">Generate Kundali</button>
+  </form>
+  

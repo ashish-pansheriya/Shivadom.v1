@@ -1,0 +1,158 @@
+{% include 'base.html' %}
+{% include 'nav.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+<head>
+  <title>{% block title %}Update Event {% endblock %}</title>
+  <style>
+    .form-gradient-bg {
+      background: linear-gradient(135deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);
+      min-height: 100vh;
+      padding: 2rem 0;
+    }
+    .event-form-container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .form-header {
+      color: #2c3e50;
+      border-bottom: 2px solid #2BD2FF;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .form-btn {
+      background: linear-gradient(45deg, #2BD2FF, #2BFF88);
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 2rem;
+      transition: all 0.3s ease;
+    }
+    .form-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(43, 210, 255, 0.4);
+      color: white;
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .django-ckeditor-widget {
+      width: 100% !important;
+    }
+    /* Fix for CKEditor */
+    .cke_chrome {
+      border-radius: 8px !important;
+      border: 1px solid #ced4da !important;
+      overflow: hidden;
+    }
+    .cke_top {
+      background: #f8f9fa !important;
+      border-bottom: 1px solid #ced4da !important;
+    }
+  </style>
+</head>
+
+{% block body %}
+<body class="form-gradient-bg">
+  <div class="container">
+    <div class="event-form-container">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <small >Dharma, Social gatherings, Training sessions, New launches, Concerts, Parties, Festivals and Athletic events etc</small>
+        <h2 class="form-header text-center mb-4">Update Event </h2>
+        
+        <div class="row">
+          <!-- Left Column -->
+          <div class="col-md-6">
+            <div class="form-group">
+              {{ form.title|as_crispy_field }}
+            </div>
+            
+            <div class="form-group">
+              {{ form.location|as_crispy_field }}
+            </div>
+            
+            <div class="form-group">
+              {{ form.types|as_crispy_field }}
+            </div>
+            
+            <div class="form-group">
+              {{ form.topic|as_crispy_field }}
+            </div>
+            
+            <div class="form-group">
+              {{ form.image|as_crispy_field }}
+            </div>
+            
+            <div class="form-group">
+              {{ form.organiser|as_crispy_field }}
+            </div>
+          </div>
+          
+          <!-- Right Column -->
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  {{ form.starts|as_crispy_field }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  {{ form.ends|as_crispy_field }}
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              {{ form.tickets|as_crispy_field }}
+            </div>
+            
+            <div class="form-group">
+              {{ form.contact|as_crispy_field }}
+            </div>
+            
+            <div class="form-group">
+              {{ form.email|as_crispy_field }}
+            </div>
+          </div>
+        </div>
+        
+        <!-- Full Width Fields -->
+        <div class="form-group">
+          {{ form.description|as_crispy_field }}
+          {{form.media}}
+        </div>
+        
+        <div class="form-group">
+          {{ form.description2|as_crispy_field }}
+          {{form.media}}
+        </div>
+        
+        <div class="form-group text-center mt-4">
+          <button class="btn form-btn btn-lg" type="submit">
+            <i class="fas fa-save mr-2"></i> Update Event
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CKEditor Fix -->
+  <script>
+    // Ensure CKEditor loads properly
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof CKEDITOR !== 'undefined') {
+        CKEDITOR.config.autoParagraph = false;
+        CKEDITOR.config.enterMode = CKEDITOR.ENTER_BR;
+        CKEDITOR.config.shiftEnterMode = CKEDITOR.ENTER_P;
+      }
+    });
+  </script>
+</body>
+{% endblock %}

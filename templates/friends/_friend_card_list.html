@@ -1,0 +1,18 @@
+{% for posts in queryset %}
+<div class="col-md-3 mb-4">
+  <div class="card bg-light text-dark">
+    <a href="{% url 'friend-post-detail' posts.id %}">
+      <img src="{{ posts.photo.url }}" class="card-img-top" style="height: 220px; object-fit: cover;">
+    </a>
+    <div class="card-body">
+      <h5 class="card-title">{{ posts.name|truncatewords:3 }}</h5>
+      <p><i class="fas fa-map-marker-alt"></i> {{ posts.address|truncatewords:4 }}</p>
+      <p><strong>Age:</strong> {{ posts.age }}</p>
+    </div>
+  </div>
+</div>
+{% empty %}
+<div class="col-12">
+  <p class="text-center text-white">No matching friends found.</p>
+</div>
+{% endfor %}

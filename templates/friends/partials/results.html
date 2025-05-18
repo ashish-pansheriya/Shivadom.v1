@@ -1,0 +1,34 @@
+<!-- partials/results.html -->
+{% for posts in queryset %}
+<div class="col-md-4 mb-4">
+  <div class="companion-card h-100">
+    <a href="{% url 'friend-post-detail' posts.id %}">
+      <img src="{{ posts.photo.url }}" class="companion-img w-100">
+    </a>
+    <div class="p-3">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="mb-0 highlightable">{{ posts.name }}</h5>
+        <span class="badge badge-primary">{{ posts.age }}</span>
+      </div>
+      <p class="text-muted mb-1 highlightable">
+        <i class="fas fa-map-marker-alt"></i> {{ posts.address }}
+      </p>
+      <p class="text-muted small highlightable">{{ posts.interests|truncatewords:8 }}</p>
+    </div>
+  </div>
+</div>
+{% empty %}
+<div class="col-12 text-center py-5">
+  <i class="fas fa-user-friends fa-3x text-muted mb-3"></i>
+  <h4 class="text-muted">No companions found</h4>
+  <p>Try adjusting your search criteria</p>
+</div>
+{% endfor %}
+
+{% if queryset.has_other_pages %}
+<div class="col-12">
+  <div class="d-flex justify-content-center">
+    {% include 'cashtreats/blog_post_pagination.html' with queryset=queryset %}
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,69 @@
+
+{% include 'base.html' %}
+{% include 'nav.html' %}
+{% load static %}
+
+
+
+{% block title %}About Us | Shivadom{% endblock %}
+
+{% block body %}
+<body style="background: linear-gradient(to bottom right, #0b1f3a, #183d5d, #44a1c2); color: white; font-family: 'Segoe UI', sans-serif;">
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <img src="{% static 'assets/logo/shivadom.png' %}" alt="Shivadom Logo" style="width:220px;">
+        <h1 class="mt-3">From Mind <strong>To Mandir</strong></h1>
+        <p class="lead">शिव को दो, जो मन में हो।</p>
+        <hr style="border-color: #ccc;">
+    </div>
+
+    <section class="mb-5">
+        <h2 class="text-info">Our Mission</h2>
+        <p>
+            Shivadom is a sacred digital platform that brings together seekers, healers, and spiritual explorers.
+            Our mission is to provide a trusted space for cosmic connections, dharmic meetups, karma-based commerce,
+            and soulful services. We empower every user to share, create, and grow spiritually and materially.
+        </p>
+    </section>
+
+    <section class="mb-5">
+        <h2 class="text-info">Our Vision</h2>
+        <p>
+            A global sacred space where spiritual connection meets community. From astrology to events,
+            from soul-led services to karma-based marketplaces — Shivadom envisions a vibrant network of people,
+            purpose, and positivity. We believe that every light has a place to shine here.
+        </p>
+    </section>
+
+    <section class="mb-5">
+        <h2 class="text-info">What You Can Do</h2>
+        <ul>
+            <li>Create your profile or store</li>
+            <li>Connect with spiritual guides, astrologers, tarot readers, and followers</li>
+            <li>Host or join dharma-based events</li>
+            <li>Write blogs and share insights</li>
+            <li>Sell products or services in the Karma Bazaar</li>
+            <li>Find new friends and divine connections globally</li>
+        </ul>
+    </section>
+
+    <section class="mb-5">
+        <h2 class="text-info">New to Shivadom?</h2>
+        <p>
+            Sign up for free and join a global soul family. Whether you're looking to grow spiritually,
+            build a sacred brand, or just find like-minded beings — you belong here.
+        </p>
+    </section>
+
+    <div class="text-center mt-5">
+        <h3 class="mb-3">Try it out. It’s Free.</h3>
+        <a href="https://www.instagram.com/com.shivadom?igsh=MWtnYnk1OGowb2FxbQ%3D%3D&utm_source=qr" class="btn btn-outline-light btn-lg">Join Shivadom</a>
+    </div>
+</div>
+
+
+
+{% include 'cashtreats/footer.html' %}
+{% endblock %}
+</body>

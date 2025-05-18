@@ -1,0 +1,101 @@
+{% include 'base.html' %}
+{% include 'nav.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load socialaccount %}
+
+<title>{% block title %} H O M E {% endblock %}</title>
+
+{% block body %}
+<body style="margin: 0; padding: 0; min-height: 100vh; background:linear-gradient(-120deg, #ba0c2f, #ffcd00, #c9c9c9);">
+
+<!-- Full width background container -->
+<div style="width: 100%; background-color: #FA8BFF;
+background-image: linear-gradient(315deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%);">
+
+  <!-- Centered content container -->
+  <div class="content-section" style="max-width: 600px; margin: 0 auto; padding: 30px 15px;">
+    <form method="POST">
+      {% csrf_token %}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Login</legend>
+        {{ form|crispy }}
+      </fieldset>
+      
+      <div class="form-group">
+        <button class="btn btn-outline-info" type="submit">Login</button>
+        <small class="text-muted ml-2">
+          <a href="{% url 'password_reset' %}">Forgot Password?</a>
+        </small>
+      </div>
+    </form>
+
+    <div style="margin-top: 30px;">
+      <small class="">Need An Account?<a class="ml-2" href="{% url 'register' %}">Sign Up Now</a></small>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Remove default margins/padding */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Full width background */
+body > div:first-child {
+  width: 100%;
+  padding: 20px 0;
+}
+
+/* Centered content */
+.content-section {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Social login buttons */
+.loginBtn {
+  box-sizing: border-box;
+  position: relative;
+  margin: 0.2em;
+  padding: 0 15px 0 46px;
+  border: none;
+  text-align: left;
+  line-height: 34px;
+  white-space: nowrap;
+  border-radius: 0.2em;
+  font-size: 16px;
+  color: #FFF;
+}
+
+.loginBtn:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 100%;
+}
+
+.loginBtn:focus {
+  outline: none;
+}
+
+.loginBtn:active {
+  box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .content-section {
+    padding: 20px 15px;
+  }
+}
+</style>
+
+</body>
+{% endblock %}

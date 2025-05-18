@@ -1,0 +1,155 @@
+{% include 'base.html' %}
+{% include 'nav.html' %}
+{% load static %}
+
+<head>
+  <title>{% block title %} Confirm Deletion {% endblock %}</title>
+  <style>
+    :root {
+      --sacred-red: #ba0c2f;
+      --divine-gold: #ffcd00;
+      --spiritual-blue: #3072eb;
+      --transition-time: 0.3s;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #58151A 0%, #BC2909 30%, #BA6D09 50%, #3072EB 80%, #0542A8 100%);
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .sacred-delete-container {
+      max-width: 600px;
+      padding: 3rem;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .sacred-delete-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(to right, var(--sacred-red), var(--divine-gold), var(--spiritual-blue));
+    }
+    
+    .delete-title {
+      color: var(--sacred-red);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      font-family: 'Alegreya SC', serif;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    .delete-title::after {
+      content: '✧ ✧ ✧';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--divine-gold);
+      letter-spacing: 5px;
+      font-size: 1rem;
+    }
+    
+    .delete-message {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .post-title {
+      color: var(--spiritual-blue);
+      font-weight: 600;
+      font-style: italic;
+    }
+    
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    
+    .btn-delete {
+      background: linear-gradient(to right, var(--sacred-red), #d33);
+      color: white;
+      border: none;
+      padding: 10px 30px;
+      border-radius: 30px;
+      font-weight: 500;
+      transition: all var(--transition-time);
+      box-shadow: 0 4px 15px rgba(186, 12, 47, 0.4);
+    }
+    
+    .btn-delete:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(186, 12, 47, 0.6);
+    }
+    
+    .btn-cancel {
+      background: white;
+      color: #333;
+      border: 1px solid #ddd;
+      padding: 10px 30px;
+      border-radius: 30px;
+      font-weight: 500;
+      transition: all var(--transition-time);
+    }
+    
+    .btn-cancel:hover {
+      background: #f8f9fa;
+      transform: translateY(-3px);
+      border-color: var(--divine-gold);
+      color: var(--sacred-red);
+    }
+    
+    .floating-om {
+      position: absolute;
+      font-size: 150px;
+      opacity: 0.05;
+      z-index: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+
+{% block body %}
+<div class="sacred-delete-container">
+  <div class="floating-om">ॐ</div>
+  
+  <form method="POST">
+    {% csrf_token %}
+    <h2 class="delete-title">Sacred Confirmation</h2>
+    
+    <p class="delete-message">
+      Are you sure you wish to release the post<br>
+      <span class="post-title">"{{object.title}}"</span><br>
+      back to the cosmic void?
+    </p>
+    
+    <div class="btn-group">
+      <button class="btn-delete" type="submit">
+        <i class="fas fa-trash-alt"></i> Release It
+      </button>
+      <a class="btn-cancel" href="{% url 'friend-post-detail' object.id %}">
+        <i class="fas fa-arrow-left"></i> Preserve It
+      </a>
+    </div>
+  </form>
+</div>
+{% endblock %}

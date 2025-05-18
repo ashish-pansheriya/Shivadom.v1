@@ -1,0 +1,112 @@
+{% include 'base.html' %}
+{% include 'nav.html' %}
+{% load static %}
+
+<head>
+  <title>{% block title %}Blog Details{% endblock %}</title>
+  <style>
+    .blog-container {
+      max-width: 1100px;
+      margin: 30px auto;
+      background: linear-gradient(140deg, #fff9e6, #fff4d6);
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+      padding: 30px;
+    }
+
+    .blog-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #6a4e0b;
+    }
+
+    .blog-subtitle {
+      font-size: 1rem;
+      color: #906300;
+    }
+
+    .blog-image {
+      width: 100%;
+      max-height: 600px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+
+    .meta-info {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .btn-collapse {
+      border-radius: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .blog-container {
+        padding: 15px;
+      }
+
+      .blog-title {
+        font-size: 1.5rem;
+      }
+
+      .blog-image {
+        max-height: 350px;
+      }
+    }
+  </style>
+</head>
+
+{% block body %}
+<body style="background: linear-gradient(62deg, #ffda9b 0%, #fff2b1 100%);">
+
+<div class="blog-container">
+  <div class="row">
+    <div class="col-md-7">
+      <h2 class="blog-title">{{ object.title }}</h2>
+
+      <div class="mt-3">
+        <h6><i class="fas fa-user-circle text-primary"></i> {{ object.name }}</h6><br>
+        <h6><i class="fas fa-map-marker-alt text-danger"></i> {{ object.location }}</h6>
+        <p class="meta-info"><strong>Category:</strong> {{ object.category }}</p>
+        <p class="meta-info"><strong>Posted:</strong> {{ object.date_posted|date:"F d, Y" }}</p>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <img src="{{ object.photo.url }}" alt="Blog Image" class="blog-image">
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <h5 class="text-dark">{{ object.content | safe }}</h5>
+    <p class="text-muted">{{ object.description }}</p>
+  </div>
+
+  <div class="mt-4">
+    <a class="btn btn-outline-secondary btn-collapse" data-toggle="collapse" href="#collapseEmail" role="button" aria-expanded="false" aria-controls="collapseEmail">
+      Show Email
+    </a>
+    <div class="collapse mt-2" id="collapseEmail">
+      <div class="card card-body bg-light">
+        <h5 class="text-primary"><i class="fas fa-envelope-open"></i> {{ object.email }}</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <div class="fb-like" data-href="http://127.0.0.1:8000/blog{{object.id}}" data-width="" data-layout="button_count" data-action="like" data-size="large" data-share="true"></div>
+    <div class="fb-comments mt-3" data-href="http://127.0.0.1:8000/blog{{object.id}}" data-numposts="5" data-width=""></div>
+  </div>
+
+  {% if object.author == user %}
+  <div class="mt-4">
+    <a class="btn btn-secondary btn-sm" href="{% url 'blog-update' object.id %}">Update</a>
+    <a class="btn btn-danger btn-sm" href="{% url 'blog-delete' object.id %}">Delete</a>
+  </div>
+  {% endif %}
+</div>
+
+</body>
+{% endblock %}

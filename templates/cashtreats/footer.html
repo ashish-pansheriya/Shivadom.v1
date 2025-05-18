@@ -1,0 +1,154 @@
+{% load static %}
+
+<footer class="bg-dark text-white position-relative overflow-hidden">
+    <!-- Cosmic Background Elements -->
+    <div class="position-absolute w-100 h-100" style="z-index: 0;">
+        <div class="planet" style="top:20%; left:10%; width:40px; height:40px; background:radial-gradient(circle, #ffdd59 0%, #ff9f1c 100%); border-radius:50%; filter:blur(1px); animation:float 15s infinite ease-in-out;"></div>
+        <div class="planet" style="top:60%; right:15%; width:30px; height:30px; background:radial-gradient(circle, #9b59b6 0%, #8e44ad 100%); border-radius:50%; filter:blur(0.5px); animation:float 12s infinite ease-in-out reverse;"></div>
+        <div class="star" style="top:30%; right:25%; width:3px; height:3px; background:#fff; border-radius:50%; box-shadow:0 0 10px 2px rgba(255,255,255,0.8); animation:twinkle 3s infinite alternate;"></div>
+    </div>
+    
+    <div class="border-top border-gold" style="border-color: #d4af37 !important;">
+        <div class="container text-center text-sm-left position-relative py-5" style="z-index: 1;">
+            <div class="row justify-content-center">
+                <ul class="list-inline cosmic-links" style="margin-top:20px; font-family:'Alegreya', serif;">
+                    <li class="list-inline-item"><a class="text-gold" style="font-size:14px; margin-right:15px; text-shadow:0 0 5px rgba(212,175,55,0.5);" href="{% url 'home' %}">Home</a></li>
+                    <li class="list-inline-item"><a class="text-gold" style="font-size:14px; margin-right:15px; text-shadow:0 0 5px rgba(212,175,55,0.5);" href="{% url 'services' %}">Services</a></li>
+                    <li class="list-inline-item"><a class="text-gold" style="font-size:14px; margin-right:15px; text-shadow:0 0 5px rgba(212,175,55,0.5);" href="{% url 'terms-conditions' %}">Terms</a></li>
+                    <li class="list-inline-item"><a class="text-gold" style="font-size:14px; margin-right:15px; text-shadow:0 0 5px rgba(212,175,55,0.5);" href="{% url 'about-us' %}">About</a></li>
+                    <li class="list-inline-item"><a class="text-gold" style="font-size:14px; text-shadow:0 0 5px rgba(212,175,55,0.5);" href="https://varta.astrosage.com/astrologer/ashish518?lang=en">Contact</a></li></a>
+                </ul>
+            </div>
+            
+            <div class="text-center position-absolute w-100 mt-4" style="z-index: 2;">
+                <a href="#top" class="scroll-top">
+                    <span class="fa-stack fa-lg">
+                        <i class="fa fa-circle fa-stack-2x text-gold"></i>
+                        <i class="fa fa-angle-up fa-stack-1x text-dark"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="pt-5 pb-4 cosmic-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 text-center text-md-left pb-4">
+                        <h2 class="mb-3 text-gold" style="font-family: 'Alegreya SC', serif;">
+                            <i class="fa fa-om"></i> Shivadom
+                        </h2>
+                        <p class="mb-1 text-white"><i class="fa fa-map-marker fa-fw text-gold"></i> Virtual Spiritual Headquarter</p>
+                        <p class="mb-1 text-white"><i class="fa fa-phone fa-fw text-gold"></i><a href="https://varta.astrosage.com/astrologer/ashish518?lang=en"> Divine Connection Line</p></a>
+                        <p class="mb-1 text-white"><i class="fas fa-hands-helping text-gold"></i></i> From Mind to Mandir </p>
+                        
+                        
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-4 text-center text-md-left pb-4">
+                        <div class="mantra-box p-3 mb-3" style="border:1px solid #d4af37; border-radius:5px;">
+                            <p class="m-0 text-white font-italic">- Place Your Triggered Light -</p>
+                        </div>
+                        <p class="my-3 text-white">For better mind peace, place your mind-generated fire to the temple's diya or incense stick - the sacred vessel for transformation.</p>
+                    </div>
+                    
+                    <div class="col-lg-4 text-center text-lg-right pb-4">
+                        
+                        
+                        <div class="social-icons">
+                            <a class="text-gold mx-2" href="https://www.youtube.com/channel/UCwr0eLbe77ZxNAQ3245maXA"><i class="fab fa-youtube fa-2x"></i></a>
+                            <a class="text-gold mx-2" href="https://www.instagram.com/com.shivadom?igsh=MWtnYnk1OGowb2FxbQ%3D%3D&utm_source=qr "><i class="fab fa-instagram fa-2x"></i></a>
+                            <a class="text-gold mx-2" href="https://www.facebook.com/com.shivadom"><i class="fab fa-facebook fa-2x"></i></a>
+                            <a class="text-gold mx-2" href="https://whatsapp.com/channel/0029Vb3nsUuIyPtVW6EfwI42"><i class="fab fa-whatsapp fa-2x"></i></a>
+                        </div>
+                        
+                        <div class="mt-3">
+                            
+                        <img src="{% static 'assets/logo/QR_Axis.png' %}" alt="Shivadom Logo" style="width:170px;"><p>  </p>
+                        <h6 class="mb-0 text-gold">🌸Monthly Site Maintenance</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center py-3 small cosmic-footer" style="background: rgba(0,0,0,0.7);">
+            <div class="container">
+                <p class="m-0 text-gold">© <script>document.write(new Date().getFullYear())</script> Shivad☼m.com | Focused Flame, Divine Aim.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Additional spiritual elements -->
+    <div class="floating-diya" style="position:absolute; bottom:10px; right:20px; z-index:0;">
+        <div class="flame" style="width:15px; height:30px; background:linear-gradient(to top, #ff7800, #ffef00); border-radius:50% 50% 20% 20%; filter:blur(1px); animation:flicker 3s infinite alternate;"></div>
+    </div>
+</footer>
+
+<style>
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes twinkle {
+        0% { opacity: 0.3; }
+        100% { opacity: 1; }
+    }
+    
+    @keyframes flicker {
+        0%, 100% { transform: scale(1); opacity:1; }
+        25% { transform: scale(0.95); opacity:0.8; }
+        50% { transform: scale(1.05); opacity:1; }
+        75% { transform: scale(0.98); opacity:0.9; }
+    }
+    
+    .text-gold { color: #d4af37; }
+    .border-gold { border-color: #d4af37; }
+    .btn-outline-gold { 
+        border-color: #d4af37; 
+        color: #d4af37;
+        transition: all 0.3s;
+    }
+    .btn-outline-gold:hover {
+        background: #d4af37;
+        color: #000;
+    }
+    
+    .cosmic-bg {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        position: relative;
+    }
+    
+    .cosmic-links a {
+        transition: all 0.3s;
+        position: relative;
+    }
+    
+    .cosmic-links a:hover {
+        color: #fff !important;
+        text-shadow: 0 0 10px rgba(255,255,255,0.8) !important;
+    }
+    
+    .cosmic-links a:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 1px;
+        bottom: -2px;
+        left: 0;
+        background: #d4af37;
+        transition: width 0.3s;
+    }
+    
+    .cosmic-links a:hover:after {
+        width: 100%;
+    }
+    
+    .scroll-top {
+        transition: transform 0.3s;
+    }
+    
+    .scroll-top:hover {
+        transform: translateY(-5px);
+    }
+</style>

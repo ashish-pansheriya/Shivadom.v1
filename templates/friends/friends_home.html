@@ -1,0 +1,315 @@
+{% include 'base.html' %}
+{% include 'nav.html' %}
+{% load static %}
+
+<head>
+  <title>{% block title %}Soul Connections {% endblock %}</title>
+  <style>
+    :root {
+      --spiritual-purple: #6a3093;
+      --peaceful-blue: #00a2e1;
+      --earth-green: #2e8b57;
+      --sunset-orange: #ff7e5f;
+      --lotus-pink: #e83e8c;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #414b56, #2c3e50);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+    }
+    
+    .search-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      padding: 15px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+    
+    .search-input {
+      background: transparent;
+      border: none;
+      color: white !important;
+    }
+    
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    .spiritual-card {
+      border: none;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+    }
+    
+    .spiritual-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(106, 48, 147, 0.2);
+    }
+    
+    .profile-image {
+      height: 50vh;
+      object-fit: cover;
+      position: relative;
+    }
+    
+    .profile-image::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    }
+    
+    .spiritual-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--lotus-pink);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+    
+    .activity-section {
+      background: linear-gradient(135deg, #2c3e50, #4a6491);
+      border-radius: 20px;
+      padding: 30px;
+      margin: 40px 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .activity-title {
+      color: white;
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 300;
+      position: relative;
+    }
+    
+    .activity-title:after {
+      content: '✧';
+      position: absolute;
+      left: 50%;
+      bottom: -15px;
+      transform: translateX(-50%);
+      color: var(--lotus-pink);
+      font-size: 1.5rem;
+    }
+    
+    .activity-list {
+      columns: 2;
+      -webkit-columns: 2;
+      -moz-columns: 2;
+    }
+    
+    .activity-list li {
+      color: white;
+      margin-bottom: 10px;
+      position: relative;
+      padding-left: 20px;
+      list-style: none;
+    }
+    
+    .activity-list li:before {
+      content: '•';
+      color: var(--peaceful-blue);
+      position: absolute;
+      left: 0;
+    }
+    
+    .spiritual-btn {
+      background: linear-gradient(to right, var(--spiritual-purple), var(--lotus-pink));
+      border: none;
+      border-radius: 30px;
+      padding: 12px 30px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+      box-shadow: 0 5px 15px rgba(106, 48, 147, 0.4);
+    }
+    
+    .spiritual-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(106, 48, 147, 0.6);
+    }
+    
+    .gender-filter {
+      margin: 15px 0;
+    }
+    
+    .gender-filter label {
+      color: white;
+      margin: 0 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .gender-filter label:hover {
+      color: var(--lotus-pink);
+    }
+    
+    .spiritual-icon {
+      margin-right: 8px;
+    }
+    
+    .info-table {
+      background: transparent;
+    }
+    
+    .info-table td {
+      border: none;
+      padding: 8px;
+    }
+    
+    .info-table .text-secondary {
+      color: var(--spiritual-purple) !important;
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+{% block body %}
+<body>
+
+<div class="container py-4">
+  <form method='GET' action="{% url 'friend-home' %}">
+    <div class="search-container">
+      <div class="input-group">
+        <input type="text" name='q' class="form-control search-input" 
+               placeholder="Search by city (e.g. London, Kyoto...) where you seek soul connections">
+        <div class="input-group-append">
+          <button class="btn btn-light" type='submit' 
+                  style="border-radius: 20px; margin-left: 10px;">
+            <i class="fas fa-search text-primary"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="gender-filter text-center mt-3">
+        <label>
+          <input type="radio" name="all" value="m" style="vertical-align: middle;"> 
+          <i class="fas fa-venus-mars spiritual-icon"></i> All Souls
+        </label>
+        <label>
+          <input type="radio" name="gender" value="Female" style="vertical-align: middle;"> 
+          <i class="fas fa-venus spiritual-icon"></i> Divine Feminine
+        </label>
+        <label>
+          <input type="radio" name="gender" value="Male" style="vertical-align: middle;"> 
+          <i class="fas fa-mars spiritual-icon"></i> Sacred Masculine
+        </label>
+      </div>
+    </div>
+  </form>
+
+  <div class="row mt-4">
+    {% for posts in queryset %}
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+      <div class="spiritual-card h-100">
+        <div class="position-relative">
+          <a href="{% url 'friend-post-detail' posts.id %}">
+            <img src="media/{{ posts.photo}}" class="profile-image w-100" alt="{{ posts.name }}">
+          </a>
+          <span class="spiritual-badge">
+            {% if posts.gender == "Female" %}
+              <i class="fas fa-venus"></i>
+            {% else %}
+              <i class="fas fa-mars"></i>
+            {% endif %}
+            {{ posts.age }}
+          </span>
+        </div>
+        
+        <div class="card-body">
+          <table class="info-table w-100">
+            <tbody>
+              <tr>
+                <td><h6 class="text-secondary">Name:</h6></td>
+                <td>{{posts.name|truncatewords:3}}</td>
+              </tr>
+              <tr>
+                <td><h6 class="text-secondary"><i class="fas fa-map-marker-alt"></i></h6></td>
+                <td>{{ posts.address |truncatewords:4}}</td>
+              </tr>
+              <tr>
+                <td><h6 class="text-secondary">Spiritual Path:</h6></td>
+                <td>
+                  {% if posts.interests %}
+                    {{ posts.interests|truncatewords:2 }}
+                  {% else %}
+                    Seeker
+                  {% endif %}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    {% include 'cashtreats/blog_post_pagination.html' with queryset=queryset %}
+  </div>
+
+  <div class="activity-section">
+    <h2 class="activity-title">
+      <i class="fas fa-lotus"></i> Sacred Activities for Soul Connections
+    </h2>
+    
+    <div class="row">
+      <div class="col-md-6">
+        <h4 class="text-center text-white mb-3">Spiritual Practices</h4>
+        <ul class="activity-list">
+          <li>Meditation companions</li>
+          <li>Prayer partners</li>
+          <li>Yoga practice buddies</li>
+          <li>Energy healing sessions</li>
+          <li>Chanting and kirtan</li>
+          <li>Moon circle gatherings</li>
+          <li>Sacred ceremony participation</li>
+          <li>Pilgrimage companions</li>
+          <li>Tarot/Astrology study</li>
+          <li>Sound healing partners</li>
+          <li>Ecstatic dance</li>
+        </ul>
+      </div>
+      
+      <div class="col-md-6">
+        <h4 class="text-center text-white mb-3">Conscious Living</h4>
+        <ul class="activity-list">
+          <li>Plant medicine integration</li>
+          <li>Ayurvedic cooking</li>
+          <li>Forest bathing</li>
+          <li>Silent retreats</li>
+          <li>Conscious parenting support</li>
+          <li>Sacred sexuality circles</li>
+          <li>Shamanic journeying</li>
+          <li>Vision quest companions</li>
+          <li>Conscious dying support</li>
+          <li>Gratitude practice partners</li>
+          <li>Mindfulness walks</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="text-center mt-5">
+      <a class="btn spiritual-btn btn-lg" href="{% url 'friend-home' %}" role="button">
+        Find Your Soul Tribe <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+{% include 'cashtreats/footer-sort.html' %}
+</body>
+{% endblock %}

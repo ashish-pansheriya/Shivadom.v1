@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Kundali Transit Calculator</h2>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form id="kundaliForm">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="birth_date" class="form-label">Birth Date</label>
+                    <input type="date" class="form-control" id="birth_date" name="birth_date" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="birth_time" class="form-label">Birth Time</label>
+                    <input type="time" class="form-control" id="birth_time" name="birth_time" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="birth_place" class="form-label">Birth Place</label>
+                    <input type="text" class="form-control" id="birth_place" name="birth_place" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="years" class="form-label">Years for Transit (1-10)</label>
+                    <select class="form-select" id="years" name="years">
+                        {% for i in range %}
+                        <option value="{{ forloop.counter }}">{{ forloop.counter }} Year{% if forloop.counter > 1 %}s{% endif %}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Calculate Transits</button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="results" class="mt-5" style="display: none;">
+        <h3 class="text-center mb-4">Transit Results</h3>
+        <div id="transitDetails"></div>
+    </div>
+</div>
+
+<script>
+document.getElementById('kundaliForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const resultsDiv = document.getElementById('results');
+    const transitDetails = document.getElementById('transitDetails');
+    
+    // Show loading state
+    transitDetails.innerHTML = '<div class="text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+    
+    fetch('', {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            transitDetails.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+            return;
+        }
+        
+        let html = '';
+        for (const [year, planets] of Object.entries(data.transit_data)) {
+            html += `<div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4>${year}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">`;
+            
+            for (const [planet, details] of Object.entries(planets)) {
+                html += `<div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h5>${planet}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Sign:</strong> ${details.sign} (${details.sign_long.toFixed(2)}°)</p>
+                            <p><strong>House:</strong> ${details.house}</p>
+                            ${details.retrograde ? '<p class="text-danger"><strong>Retrograde</strong></p>' : ''}
+                            ${details.stationary ? '<p class="text-warning"><strong>Stationary</strong></p>' : ''}
+                            
+                            <h6>Aspects:</h6>
+                            <ul class="list-unstyled">`;
+                
+                if (details.aspects.length > 0) {
+                    details.aspects.forEach(aspect => {
+                        html += `<li>${aspect.planet} - ${aspect.aspect} (${aspect.orb.toFixed(2)}° orb)</li>`;
+                    });
+                } else {
+                    html += '<li>No major aspects</li>';
+                }
+                
+                html += `</ul>
+                        </div>
+                    </div>
+                </div>`;
+            }
+            
+            html += `</div></div></div>`;
+        }
+        
+        transitDetails.innerHTML = html;
+        resultsDiv.style.display = 'block';
+    })
+    .catch(error => {
+        transitDetails.innerHTML = `<div class="alert alert-danger">An error occurred: ${error.message}</div>`;
+    });
+});
+</script>
+{% endblock %}

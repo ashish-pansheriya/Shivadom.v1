@@ -1,0 +1,227 @@
+{% include 'base.html' %}
+{% include 'nav.html' %}
+{% load static %}
+
+<head>
+  <title>{% block title %}{{ object.name }}'s Profile {% endblock %}</title>
+  <style>
+    .profile-gradient {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+    .profile-card {
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .profile-img-container {
+      height: 100%;
+      overflow: hidden;
+    }
+    .profile-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .profile-img-container:hover .profile-img {
+      transform: scale(1.03);
+    }
+    .info-label {
+      font-weight: 600;
+      color: #4a5568;
+      width: 120px;
+    }
+    .contact-btn {
+      background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      transition: all 0.3s ease;
+    }
+    .contact-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .collapse-content {
+      background: rgba(255,255,255,0.9);
+      border-radius: 8px;
+    }
+    .payment-form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+
+<body class="profile-gradient">
+  <div class="container py-5">
+    <div class="profile-card mx-auto">
+      <div class="row no-gutters">
+        <!-- Profile Image Column -->
+        <div class="col-md-5">
+          <div class="profile-img-container">
+            <img src="{{ object.photo.url }}" class="profile-img" alt="{{ object.name }}'s profile picture">
+          </div>
+        </div>
+        
+        <!-- Profile Info Column -->
+        <div class="col-md-7">
+          <div class="p-4">
+            <!-- Basic Info Section -->
+            <div class="mb-4">
+              <h2 class="font-weight-bold text-dark mb-3">{{ object.name }}</h2>
+              <div class="d-flex align-items-center mb-2">
+                <i class="fas fa-birthday-cake mr-2 text-primary"></i>
+                <span class="text-dark">{{ object.age }}</span>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="fas fa-map-marker-alt mr-2 text-primary"></i>
+                <span class="text-dark">{{ object.address }}</span>
+              </div>
+            </div>
+            
+            <hr class="my-4">
+            
+            <!-- Detailed Info Section -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <span class="info-label">Gender:</span>
+                  <span class="text-dark">{{ object.gender }}</span>
+                </div>
+                <div class="mb-3">
+                  <span class="info-label">Body Type:</span>
+                  <span class="text-dark">{{ object.body }}</span>
+                </div>
+                <div class="mb-3">
+                  <span class="info-label">Height:</span>
+                  <span class="text-dark">{{ object.height }}</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <span class="info-label">Languages:</span>
+                  <span class="text-dark">{{ object.language }}</span>
+                </div>
+                <div class="mb-3">
+                  <span class="info-label">Activities:</span>
+                  <span class="text-dark">{{ object.activities }}</span>
+                </div>
+                <div class="mb-3">
+                  <span class="info-label">Fees:</span>
+                  <span class="text-dark font-weight-bold">{{ object.fees }}</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- About Section -->
+            <div class="mt-4">
+              <h5 class="text-primary mb-3">About</h5>
+              <p class="text-dark">{{ object.about }}</p>
+            </div>
+            
+            <!-- Contact & Payment Section -->
+            <div class="mt-5">
+    
+              <!-- Contact Button -->
+              <button class="btn btn-primary contact-btn mb-3" data-toggle="collapse" data-target="#contactInfo">
+                <i class="fas fa-envelope mr-2"></i> Contact Now
+              </button>
+              
+              <!-- Contact Info (Collapsed) -->
+              <div class="collapse collapse-content mb-4" id="contactInfo">
+                <div class="p-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-phone mr-2 text-primary"></i>
+                    <h5 class="mb-0">{{ object.contact }}</h5>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-envelope mr-2 text-primary"></i>
+                    <h5 class="mb-0">{{ object.email }}</h5>
+                  </div>
+                </div>
+              </div>
+              
+              
+            
+            <!-- Edit/Delete Buttons (for owner) -->
+            {% if object.author == user %}
+            <div class="mt-4 pt-3 border-top">
+              <a class="btn btn-outline-secondary btn-sm" href="{% url 'friend-post-update' object.id %}">
+                <i class="fas fa-edit mr-1"></i> Update
+              </a>
+              <a class="btn btn-outline-danger btn-sm" href="{% url 'friend-post-delete' object.id %}">
+                <i class="fas fa-trash-alt mr-1"></i> Delete
+              </a>
+              <p class="text-muted small mt-2">
+                <i class="far fa-calendar-alt mr-1"></i> Created on {{ object.date_posted|date:"F d, Y" }}
+              </p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stripe JS -->
+  <script src="https://js.stripe.com/v3/"></script>
+  <script>
+    var stripe = Stripe('{{ stripe_key }}');
+    var elements = stripe.elements();
+    
+    var style = {
+      base: {
+        color: "#32325d",
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+          color: "#aab7c4"
+        }
+      },
+      invalid: {
+        color: "#fa755a",
+        iconColor: "#fa755a"
+      }
+    };
+    
+    var card = elements.create("card", { style: style });
+    card.mount("#card-element");
+    
+    card.addEventListener('change', function(event) {
+      var displayError = document.getElementById('card-errors');
+      if (event.error) {
+        displayError.textContent = event.error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
+    
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      stripe.createToken(card).then(function(result) {
+        if (result.error) {
+          var errorElement = document.getElementById('card-errors');
+          errorElement.textContent = result.error.message;
+        } else {
+          stripeTokenHandler(result.token);
+        }
+      });
+    });
+    
+    function stripeTokenHandler(token) {
+      var form = document.getElementById('payment-form');
+      var hiddenInput = document.createElement('input');
+      hiddenInput.setAttribute('type', 'hidden');
+      hiddenInput.setAttribute('name', 'stripeToken');
+      hiddenInput.setAttribute('value', token.id);
+      form.appendChild(hiddenInput);
+      form.submit();
+    }
+  </script>
+</body>
+
+{% include 'cashtreats/footer-sort.html' %}
